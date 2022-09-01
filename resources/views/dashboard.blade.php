@@ -1,8 +1,5 @@
-<x-app-layout>
-    @section('title')
-        Admin Management
-    @stop
-
+<x-app-layout title="Admin Managment">
+ 
     <x-slot name="header">
 
     <div class="row mb-2">
@@ -43,7 +40,7 @@
                 <div class="card-body">
                 Start creating your amazing application!
                 </div>
-                
+
                 <!-- /.card-body -->
                 <div class="card-footer">
                 Footer
