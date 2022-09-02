@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,11 +16,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('backend/login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::prefix(config('app.admin_prefix'))->group(function ()
+{
+    Auth::routes([
+      'register' => false, // Registration Routes...
+      'reset' => false, // Password Reset Routes...
+    ]);
 
-require __DIR__.'/auth.php';
+    Route::middleware(['auth'])->group(function () {
+
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+        Route::resource('users', UserController::class);
+
+    });
+});

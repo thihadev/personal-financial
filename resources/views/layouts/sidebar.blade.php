@@ -12,7 +12,7 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
               <li class="nav-item">
-                <a href="{{ route('dashboard') }}" class="nav-link">
+                <a href="{{ route('dashboard') }}" class="nav-link {{ active_path() }}">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>
                     Dashboard
@@ -20,8 +20,8 @@
                 </a>
               </li>
 
-              <li class="nav-item">
-                <a href="#" class="nav-link">
+              <li class="nav-item {{ open_segment(2, 'users') }}">
+                <a href="#" class="nav-link {{ active_segment(2, 'users') }}">
                   <i class="nav-icon fas fa-users"></i>
                   <p>
                     Admin Management
@@ -30,11 +30,19 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="../../index.html" class="nav-link">
+                    <a href="{{ route('users.index') }}" class="nav-link {{ active_path('users') }}">
                       <i class="far fa-circle nav-icon"></i>
                       <p>List</p>
                     </a>
+
+                    <li class="nav-item">
+                      <a href="{{ route('users.create') }}" class="nav-link {{ active_path('users/create') }}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Create</p>
+                      </a>
+                    </li>
                   </li>
+                </ul>
               </li>
 
             </ul>

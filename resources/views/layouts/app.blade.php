@@ -14,10 +14,18 @@
   <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+  <style type="text/css">
+    .alert {
+        position: fixed;
+        right: 15px;
+        bottom: 50px;
+        z-index: 10;
+    }
+  </style>
 
   @yield('styles')
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed navbar-dark">
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -65,7 +73,15 @@
   <!-- AdminLTE App -->
   <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 
-  @yield('scripts')
+  @stack('scripts')
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+
+      $('.alert').fadeOut(8000);
+
+    });
+  </script>
 
   </body>
 </html>

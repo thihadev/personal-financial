@@ -1,19 +1,17 @@
-<x-app-layout title="Admin Managment">
+<x-app-layout title="Dashboard">
  
     <x-slot name="header">
 
     <div class="row mb-2">
         <div class="col-sm-6">
             <h1 class="font-semibold text-xl text-gray-800 leading-tight">
-               Admin Managment
+               Dashboard
             </h1>
         </div>
 
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                <li class="breadcrumb-item active">Fixed Layout</li>
+                <!-- <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li> -->
             </ol>
         </div>
     </div>
