@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\BankController;
+use App\Http\Controllers\Backend\WalletController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +34,12 @@ Route::prefix(config('app.admin_prefix'))->group(function ()
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::resource('users', UserController::class);
+
+        Route::resource('categories', CategoryController::class);
+
+        Route::resource('banks', BankController::class);
+
+        Route::resource('wallets', WalletController::class);
 
     });
 });

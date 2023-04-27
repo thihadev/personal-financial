@@ -45,6 +45,56 @@
                 </ul>
               </li>
 
+              <li class="nav-item {{ open_segment(2, 'categories') }}">
+                <a href="#" class="nav-link {{ active_segment(2, 'categories') }}">
+                  <i class="nav-icon fas fa-list"></i>
+                  <p>
+                    Category Management
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('categories.index') }}" class="nav-link {{ active_path('categories') }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>List</p>
+                    </a>
+
+                    <li class="nav-item">
+                      <a href="{{ route('categories.create') }}" class="nav-link {{ active_path('categories/create') }}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Create</p>
+                      </a>
+                    </li>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="nav-item {{ open_segment(2, 'banks') }}">
+                <a href="#" class="nav-link {{ active_segment(2, 'banks') }}">
+                  <i class="nav-icon fas fa-landmark"></i>
+                  <p>
+                    Bank Management
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('banks.index') }}" class="nav-link {{ active_path('banks') }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>List</p>
+                    </a>
+
+                    <li class="nav-item">
+                      <a href="{{ route('banks.create') }}" class="nav-link {{ active_path('banks/create') }}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Create</p>
+                      </a>
+                    </li>
+                  </li>
+                </ul>
+              </li>
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
