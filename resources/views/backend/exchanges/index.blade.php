@@ -1,18 +1,18 @@
-<x-app-layout title="Payment Management">
+<x-app-layout title="Transaction Management">
  
     <x-slot name="header">
 
     <div class="row mb-2">
         <div class="col-sm-6">
             <h1 class="font-semibold text-xl text-gray-800 leading-tight">
-               Payment Management
+               Transaction Management
             </h1>
         </div>
 
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item active">Payment List</li>
+                <li class="breadcrumb-item active">Transaction List</li>
             </ol>
         </div>
     </div>
@@ -24,9 +24,9 @@
             <!-- Default box -->
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Payment List</h2>
+                    <h2 class="card-title">Transaction List</h2>
                     <div class="card-tool">
-                        <a href="{{ route('banks.create') }}" class="btn btn-primary float-right">Add New Payment</a>
+                        <a href="{{ route('transactions.create') }}" class="btn btn-primary float-right">Add New Transaction</a>
                     </div>
                 </div>
 
@@ -34,23 +34,30 @@
                     <table class="table table-bordered">
                     <thead>
                         <tr>
-                          <th style="width: 10px">#</th>
-                          <th>Logo</th>
-                          <th>Name</th>
-                          <th class="text-right py-0 align-middle">Action</th>
+                            <th style="width: 10px">#</th>
+                            <th>Category Name</th>
+                            <th>Payment</th>
+                            <th>Transfer Payment</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Fee</th>
+                            <th class="text-right py-0 align-middle">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($payments as $key => $payment)
+                        @foreach($transactions as $key => $transaction)
                         <tr>
                             <td> {{ $key + 1 }}</td>
-                            <td> <img src="{{ image_path($payment->logo) }}" width="80"></td>
-                            <td> {{ $payment->name }}</td>
+                            <td> {{ $transaction->category?->name }}</td>
+                            <td> {{ $transaction->wallet?->bank?->name }}</td>
+                            <td> {{ $transaction->transferWallet?->bank?->name }}</td>
+                            <td> {{ $transaction->type->name }}</td>
+                            <td> {{ $transaction->amount }}</td>
                             <td class="text-right py-0 align-middle">
-                                <a href="{{ route('banks.edit', $payment) }}" class="btn btn-primary">
+                                <a href="{{ route('transactions.edit', $transaction) }}" class="btn btn-primary">
                                   <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="#deleteModal" data-toggle="modal" data-id="{{ $payment->id }}" class="btn btn-danger">
+                                <a href="#deleteModal" data-toggle="modal" data-id="{{ $transaction->id }}" class="btn btn-danger">
                                   <i class="fas fa-trash"></i>
                                 </a>
                             </td>
@@ -63,7 +70,7 @@
                 <!-- /.card-body -->
                 <div class="card-footer">
                     <ul class="pagination m-0 float-right">
-                      {{ $payments->appends($_GET)->links() }}
+                      {{ $transactions->appends($_GET)->links() }}
                     </ul>
                 </div>
               <!-- /.card-footer-->
@@ -71,7 +78,6 @@
             <!-- /.card -->
         </div>
     </div>
-
 
 @include('includes.delete-modal')
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\BankController;
 use App\Http\Controllers\Backend\WalletController;
+use App\Http\Controllers\Backend\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,10 @@ Route::prefix(config('app.admin_prefix'))->group(function ()
         Route::resource('banks', BankController::class);
 
         Route::resource('wallets', WalletController::class);
+
+        Route::resource('transactions', TransactionController::class);
+
+        Route::get('exchange-transactions', [TransactionController::class, 'exchange'])->name('exchange-transactions');
 
     });
 });

@@ -16,4 +16,14 @@ class Wallet extends Model
         'active',
     ];
 
+    public function bank()
+    {
+        return $this->belongsTo(Bank::class);
+    }    
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

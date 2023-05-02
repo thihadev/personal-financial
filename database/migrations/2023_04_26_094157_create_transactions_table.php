@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedInteger('category_id')->index()->nullable();
             $table->unsignedInteger('type')->index()->nullable();
             $table->bigInteger('amount')->index();
+            $table->integer('fees')->index()->default(0);
             $table->date('date')->index();
             $table->bigInteger('last_balance')->index();
             $table->longText('description')->nullable();

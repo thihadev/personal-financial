@@ -37,6 +37,7 @@
                           <th style="width: 10px">#</th>
                           <th>Payment Name</th>
                           <th>User</th>
+                          <th>Balance</th>
                           <th class="text-right py-0 align-middle">Action</th>
                         </tr>
                     </thead>
@@ -44,8 +45,9 @@
                         @foreach($wallets as $key => $wallet)
                         <tr>
                             <td> {{ $key + 1 }}</td>
-                            <td> {{ $wallet->bank_id }}</td>
-                            <td> {{ $wallet->user_id }}</td>
+                            <td> {{ $wallet->bank?->name }}</td>
+                            <td> {{ $wallet->user?->name }}</td>
+                            <td> {{ number_format($wallet->balance) }}</td>
                             <td class="text-right py-0 align-middle">
                                 <a href="{{ route('wallets.edit', $wallet) }}" class="btn btn-primary">
                                   <i class="fas fa-edit"></i>
