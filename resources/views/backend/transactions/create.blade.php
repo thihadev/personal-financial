@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="amount">Amount</label>
+                        <label for="amount">Amount <span class="text-red">*</span></label>
                         <x-input type="number" name="amount" value="" autocomplete="off"/>
                     </div>
 

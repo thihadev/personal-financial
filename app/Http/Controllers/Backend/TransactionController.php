@@ -20,7 +20,8 @@ class TransactionController extends Controller
      */
     public function index(TransactionFilter $filter)
     {
-        $transactions = Transaction::latest()->filter($filter)->paginate(20);
+        $transactions = Transaction::orderBy('date','desc')->filter($filter)->where('type',TransactionType::PAY)->paginate(20);
+
         $wallets = Wallet::get();
 
         return view('backend.transactions.index', compact('transactions','wallets'));
@@ -39,7 +40,16 @@ class TransactionController extends Controller
         return view('backend.transactions.create',compact('categories','wallets'));
     }
 
-    public function exchange()
+    public function exchangeIndex(TransactionFilter $filter)
+    {
+        $transactions = Transaction::orderBy('date','desc')->filter($filter)->where('type',TransactionType::EXCHANGE)->paginate(20);
+
+        $wallets = Wallet::get();
+
+        return view('backend.exchanges.index', compact('transactions','wallets'));
+    }
+
+    public function exchangeCreate()
     {
         $categories = Category::where('type',TransactionType::EXCHANGE)->get();
         $wallets = Wallet::get();
@@ -60,6 +70,10 @@ class TransactionController extends Controller
         $data['type'] = Category::find($data['category_id'])->type;
 
         Transaction::create($data);
+
+        if ($request->transfer_wallet_id) {
+            return redirect()->route('exchange-transactions.index')->with('success', 'Successfully credated.');
+        }
 
         return redirect()->route('transactions.index')->with('success', 'Successfully credated.');
     }
@@ -108,5 +122,4 @@ class TransactionController extends Controller
     {
         //
     }
-
 }

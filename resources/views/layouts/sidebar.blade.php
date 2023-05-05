@@ -145,14 +145,29 @@
                 </ul>
               </li>
 
-
-              <li class="nav-item">
-                <a href="{{ route('exchange-transactions') }}" class="nav-link {{ active_path('exchange-transactions') }}">
-                  <i class="nav-icon fa fa-exchange-alt"></i>
+              <li class="nav-item {{ open_segment(2, 'exchange-transactions') }} {{ open_segment(2, 'exchange-transactions/create') }}">
+                <a href="#" class="nav-link {{ active_segment(2, 'exchange-transactions') }} {{ active_segment(2, 'exchange-transactions/create') }}">
+                  <i class="nav-icon fas fa-exchange-alt"></i>
                   <p>
                     Exchange
+                    <i class="right fas fa-angle-left"></i>
                   </p>
                 </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('exchange-transactions.index') }}" class="nav-link {{ active_path('exchange-transactions') }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>List</p>
+                    </a>
+
+                    <li class="nav-item">
+                      <a href="{{ route('exchange-transactions.create') }}" class="nav-link {{ active_path('transactions/create') }}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Create</p>
+                      </a>
+                    </li>
+                  </li>
+                </ul>
               </li>
 
             </ul>

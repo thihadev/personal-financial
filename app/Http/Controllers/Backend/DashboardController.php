@@ -12,7 +12,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $wallets = Wallet::get();
+        $wallets = Wallet::with('transaction')->get();
         $balance = Wallet::sum('balance');
         $expense = Transaction::where('type',TransactionType::PAY)->sum('amount');
 

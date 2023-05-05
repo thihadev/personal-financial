@@ -23,7 +23,7 @@
         <div class="col-12">
             <!-- Default box -->
             <div class="card">
-                                <div class="card-header">
+                <div class="card-header">
                     <form action="{{ route('transactions.index') }}" method="GET">
                         <div class="row">
                             <div class="col-md-3">
@@ -53,12 +53,12 @@
                                     <button type="submit" class="mr-3 btn btn-primary" id="submit">
                                         <i class="fa fa-filter"></i> Filter
                                     </button>
-                                    <button type="submit" class="mr-3 btn btn-warning" id="clear">
+<!--                                     <button type="submit" class="mr-3 btn btn-warning" id="clear">
                                         <i class="fa fa-trash"></i> Clear
                                     </button>
                                     <button type="submit" name="btn" value="export" class="mr-3 btn btn-info" id="submit">
                                         <i class="fa fa-download"></i> Export
-                                    </button>
+                                    </button> -->
                                 </div>
                             </div>
                         </div>
@@ -66,13 +66,13 @@
                 </div>
 
                 <div class="card-body">
+                    <h3>Expense Total - {{ number_format($transactions->sum('amount')) }}</h3>
                     <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th style="width: 10px">#</th>
                             <th>Category Name</th>
                             <th>Payment</th>
-                            <th>Exchange Payment</th>
                             <th>Type</th>
                             <th>Amount</th>
                             <th>Fee</th>
@@ -87,9 +87,8 @@
                             <td> {{ $key + 1 }}</td>
                             <td> {{ $transaction->category?->name }}</td>
                             <td> {{ $transaction->wallet?->bank?->name }}</td>
-                            <td> {{ $transaction->transferWallet?->bank?->name ?? '-' }}</td>
                             <td><span class="badge badge-{{$transaction->color()}}">{{ $transaction->type->name }}</span></td>
-                            <td class="text-right text-bold">{{ $transaction->amount }}</td>
+                            <td class="text-right text-bold">{{ number_format($transaction->amount) }}</td>
                             <td class="text-right text-bold">{{ $transaction->fees }}</td>
                             <td>{{ $transaction->description }}</td>
                             <td> {{ $transaction->date->format('d-m-Y') }}</td>

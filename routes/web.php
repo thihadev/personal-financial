@@ -44,7 +44,8 @@ Route::prefix(config('app.admin_prefix'))->group(function ()
 
         Route::resource('transactions', TransactionController::class);
 
-        Route::get('exchange-transactions', [TransactionController::class, 'exchange'])->name('exchange-transactions');
+        Route::get('exchange-transactions/create', [TransactionController::class, 'exchangeCreate'])->name('exchange-transactions.create');
+        Route::get('exchange-transactions', [TransactionController::class, 'exchangeIndex'])->name('exchange-transactions.index');
 
     });
 });
