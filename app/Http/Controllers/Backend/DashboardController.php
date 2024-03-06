@@ -14,8 +14,9 @@ class DashboardController extends Controller
     {
         $wallets = Wallet::with('transaction')->get();
         $balance = Wallet::sum('balance');
-        $expense = Transaction::where('type',TransactionType::PAY)->sum('amount');
-
-        return view('dashboard',compact('wallets','balance','expense'));
+        // $expense = Transaction::where('type',TransactionType::EXPENSE)->sum('amount');
+        // $income = Transaction::where('type',TransactionType::INCOME)->sum('amount');
+// 
+        return view('dashboard',compact('wallets','balance'));
     }
 }

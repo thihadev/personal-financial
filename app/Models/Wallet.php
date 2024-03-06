@@ -11,8 +11,10 @@ class Wallet extends Model
 
     protected $fillable = [
         'user_id',
-        'bank_id',
+        'wallet_name',
+        'initial_amount',
         'balance',
+        'note',
         'active',
     ];
 
@@ -29,6 +31,16 @@ class Wallet extends Model
     public function transaction()
     {
         return $this->hasMany(Transaction::class);
+    }
+
+    public function lastBalance()
+    {
+        return $this->initial_amount + $this->balance;
+    }
+
+    public function lastBalanceDate()
+    {
+        return $this->updated_at->format('d/m/Y H:iA');
     }
 
 }

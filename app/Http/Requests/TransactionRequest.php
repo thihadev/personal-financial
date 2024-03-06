@@ -29,6 +29,7 @@ class TransactionRequest extends FormRequest
             'description'   => ['nullable'],
             'date'          => ['required'],
             'category_id'   => ['required'],
+            'sub_category_id'   => ['nullable'],
             'wallet_id'     => ['required'],
             'transfer_wallet_id'     => ['nullable'],
         ];

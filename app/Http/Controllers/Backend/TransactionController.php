@@ -20,11 +20,13 @@ class TransactionController extends Controller
      */
     public function index(TransactionFilter $filter)
     {
-        $transactions = Transaction::orderBy('date','desc')->filter($filter)->where('type',TransactionType::PAY)->paginate(20);
+        $transactions = Transaction::orderBy('date','desc')->filter($filter)->paginate(20);
 
         $wallets = Wallet::get();
+        $total = $transactions->sum('amount');
+        $span = $total > 0 ? 'text-green' : 'text-red';
 
-        return view('backend.transactions.index', compact('transactions','wallets'));
+        return view('backend.transactions.index', compact('transactions','wallets','total', 'span'));
     }
 
     /**
@@ -34,7 +36,7 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        $categories = Category::where('type','<>',TransactionType::EXCHANGE)->get();
+        $categories = Category::get();
         $wallets = Wallet::get();
 
         return view('backend.transactions.create',compact('categories','wallets'));
@@ -42,7 +44,7 @@ class TransactionController extends Controller
 
     public function exchangeIndex(TransactionFilter $filter)
     {
-        $transactions = Transaction::orderBy('date','desc')->filter($filter)->where('type',TransactionType::EXCHANGE)->paginate(20);
+        $transactions = Transaction::orderBy('date','desc')->filter($filter)->paginate(20);
 
         $wallets = Wallet::get();
 
@@ -51,7 +53,7 @@ class TransactionController extends Controller
 
     public function exchangeCreate()
     {
-        $categories = Category::where('type',TransactionType::EXCHANGE)->get();
+        $categories = Category::get();
         $wallets = Wallet::get();
 
         return view('backend.exchanges.create',compact('categories','wallets'));
@@ -68,6 +70,7 @@ class TransactionController extends Controller
         $data = $request->validated();
 
         $data['type'] = Category::find($data['category_id'])->type;
+        $data['amount'] = TransactionType::INCOME == $data['type'] ? $data['amount'] : -$data['amount'];
 
         Transaction::create($data);
 

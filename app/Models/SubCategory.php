@@ -6,14 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\TransactionType;
 
-class Category extends Model
+class SubCategory extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['image', 'name', 'type', 'active'];
+    protected $fillable = ['image', 'category_id', 'name', 'type', 'active'];
 
     protected $casts = [
         'type' => TransactionType::class
     ];
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

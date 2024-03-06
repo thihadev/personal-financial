@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\BankController;
 use App\Http\Controllers\Backend\WalletController;
 use App\Http\Controllers\Backend\TransactionController;
@@ -37,6 +38,10 @@ Route::prefix(config('app.admin_prefix'))->group(function ()
         Route::resource('users', UserController::class);
 
         Route::resource('categories', CategoryController::class);
+
+        Route::resource('sub-categories', SubCategoryController::class);
+        Route::post('ajax/get-category', [SubCategoryController::class, 'getCategory'])->name('ajax.get-category');
+        Route::post('ajax/get-sub-category', [SubCategoryController::class, 'getSubCategory'])->name('ajax.get-sub-category');
 
         Route::resource('banks', BankController::class);
 

@@ -31,6 +31,7 @@ class WalletController extends Controller
     public function create()
     {
         $users = User::latest()->get();
+
         return view('backend.wallets.create',compact('users'));
     }
 
@@ -44,15 +45,19 @@ class WalletController extends Controller
     {
         $data = $request->validated();
 
-        $payments = Bank::get();
+        $data['balance'] = $request->initial_amount;
+        $data['user_id'] = auth()->id();
 
-        for ($i=0; $i < $payments->count(); $i++) {
-            $wallet = new Wallet();
-            $wallet->user_id = $request->user_id;
-            $wallet->bank_id = $payments[$i]->id;
-            $wallet->balance = 0;
-            $wallet->save();
-        }
+        Wallet::create($data);
+        // $payments = Bank::get();
+
+        // for ($i=0; $i < $payments->count(); $i++) {
+        //     $wallet = new Wallet();
+        //     $wallet->user_id = $request->user_id;
+        //     $wallet->bank_id = $payments[$i]->id;
+        //     $wallet->balance = 0;
+        //     $wallet->save();
+        // }
 
         return redirect()->route('wallets.index')->with('success', 'Successfully credated.');
     }

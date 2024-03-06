@@ -4,9 +4,9 @@
 
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="font-semibold text-xl text-gray-800 leading-tight">
+            <!-- <h1 class="font-semibold text-xl text-gray-800 leading-tight">
                Wallet Management
-            </h1>
+            </h1> -->
         </div>
 
         <div class="col-sm-6">
@@ -45,7 +45,7 @@
                         @foreach($wallets as $key => $wallet)
                         <tr>
                             <td> {{ $key + 1 }}</td>
-                            <td> {{ $wallet->bank?->name }}</td>
+                            <td> {{ $wallet->wallet_name }}</td>
                             <td> {{ $wallet->user?->name }}</td>
                             <td> {{ number_format($wallet->balance) }}</td>
                             <td class="text-right py-0 align-middle">

@@ -23,8 +23,18 @@ class WalletRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'user_id' => ['required']
-        ];
+        return match ($this->method()) {
+            'POST' => [
+                'wallet_name' => 'required',
+                'initial_amount' => 'required',
+                'note' => 'nullable',
+            ],
+            'PUT', 'PATCH' => [
+                'wallet_name' => 'nullable',
+                'initial_amount' => 'required',
+                'note' => 'nullable',
+            ],
+            default => [],
+        };
     }
 }

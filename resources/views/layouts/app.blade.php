@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
 
@@ -93,6 +94,11 @@
     margin-bottom: 1em;
   }
 
+  .table-bordered th,
+  .table-bordered td {
+    vertical-align: middle;
+    text-align: center;
+  }
 
   </style>
 
@@ -149,11 +155,16 @@
   <!-- daterangepicker -->
   <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
   <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
+  <script src="{{ asset('plugins/select2/js/select2.min.js') }}"></script>
   <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.js') }}"></script>
   @stack('scripts')
 
   <script type="text/javascript">
+
+
     $(document).ready(function(){
+
+      $('.select2').select2();
 
       $('.alert').fadeOut(8000);
 

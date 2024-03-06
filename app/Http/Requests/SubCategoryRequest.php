@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class SubCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,14 +25,16 @@ class CategoryRequest extends FormRequest
     {
         return match ($this->method()) {
             'POST' => [
-                'image' => 'required',
-                'name' => 'required',
-                'type' => 'required',
+                'image' => ['required'],
+                'category_id' => ['required'],
+                'name' => ['required'],
+                'type' => ['required'],
             ],
             'PUT', 'PATCH' => [
-                'image' => 'nullable',
-                'name' => 'required',
-                'type' => 'required',
+                'image' => ['required'],
+                'category_id' => ['required'],
+                'name' => ['required'],
+                'type' => ['required'],
             ],
             default => [],
         };

@@ -15,9 +15,12 @@ return new class extends Migration
     {
         Schema::create('wallets', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id')->index();
-            $table->unsignedInteger('bank_id')->index();
-            $table->bigInteger('balance')->index();
+            $table->unsignedInteger('user_id')->nullable()->index();
+            // $table->unsignedInteger('bank_id')->nullable()->index();
+            $table->sting('wallet_name')->index();
+            $table->bigInteger('initial_amount')->index();
+            $table->bigInteger('balance')->default(0)->index();
+            $table->text('note')->nullable();
             $table->boolean('active')->index()->default(0);
             $table->timestamps();
         });

@@ -1,18 +1,18 @@
-<x-app-layout title="Transaction Management">
+<x-app-layout title="Expense">
  
     <x-slot name="header">
 
     <div class="row mb-2">
         <div class="col-sm-6">
             <h1 class="font-semibold text-xl text-gray-800 leading-tight">
-               Transaction Management
+               Expense 
             </h1>
         </div>
 
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item active">Transaction List</li>
+                <li class="breadcrumb-item active">Expense List</li>
             </ol>
         </div>
     </div>
@@ -66,14 +66,15 @@
                 </div>
 
                 <div class="card-body">
-                    <h3>Expense Total - {{ number_format($transactions->sum('amount')) }}</h3>
+                    
+                    <h5>Total : <span class="{{$span}}">{{ $total }}</span></h5>
                     <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th style="width: 10px">#</th>
                             <th>Category Name</th>
-                            <th>Payment</th>
-                            <th>Type</th>
+                            <th>Account</th>
+                            <!-- <th>Type</th> -->
                             <th>Amount</th>
                             <th>Fee</th>
                             <th>Remark</th>
@@ -83,11 +84,11 @@
                     </thead>
                     <tbody>
                         @foreach($transactions as $key => $transaction)
-                        <tr>
+                        <tr class="table-{{$transaction->type->color()}}">
                             <td> {{ $key + 1 }}</td>
                             <td> {{ $transaction->category?->name }}</td>
-                            <td> {{ $transaction->wallet?->bank?->name }}</td>
-                            <td><span class="badge badge-{{$transaction->color()}}">{{ $transaction->type->name }}</span></td>
+                            <td> {{ $transaction->wallet?->wallet_name }}</td>
+                            <!-- <td><span class="badge badge-{{$transaction->color()}}">{{ $transaction->type->name }}</span></td> -->
                             <td class="text-right text-bold">{{ number_format($transaction->amount) }}</td>
                             <td class="text-right text-bold">{{ $transaction->fees }}</td>
                             <td>{{ $transaction->description }}</td>

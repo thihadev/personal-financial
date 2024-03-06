@@ -24,7 +24,7 @@
                 <a href="#" class="nav-link {{ active_segment(2, 'users') }}">
                   <i class="nav-icon fas fa-users"></i>
                   <p>
-                    Admin Management
+                    Admin
                     <i class="right fas fa-angle-left"></i>
                   </p>
                 </a>
@@ -34,6 +34,7 @@
                       <i class="far fa-circle nav-icon"></i>
                       <p>List</p>
                     </a>
+                  </li>
 
                     <li class="nav-item">
                       <a href="{{ route('users.create') }}" class="nav-link {{ active_path('users/create') }}">
@@ -41,7 +42,6 @@
                         <p>Create</p>
                       </a>
                     </li>
-                  </li>
                 </ul>
               </li>
 
@@ -49,7 +49,7 @@
                 <a href="#" class="nav-link {{ active_segment(2, 'categories') }}">
                   <i class="nav-icon fas fa-list"></i>
                   <p>
-                    Category Management
+                    Category
                     <i class="right fas fa-angle-left"></i>
                   </p>
                 </a>
@@ -59,18 +59,41 @@
                       <i class="far fa-circle nav-icon"></i>
                       <p>List</p>
                     </a>
-
-                    <li class="nav-item">
+                  </li>
+                  <li>
                       <a href="{{ route('categories.create') }}" class="nav-link {{ active_path('categories/create') }}">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Create</p>
                       </a>
-                    </li>
                   </li>
                 </ul>
               </li>
 
-              <li class="nav-item {{ open_segment(2, 'banks') }}">
+              <li class="nav-item {{ open_segment(2, 'sub-categories') }}">
+                <a href="#" class="nav-link {{ active_segment(2, 'sub-categories') }}">
+                  <i class="nav-icon fas fa-list"></i>
+                  <p>
+                    Sub-Category
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('sub-categories.index') }}" class="nav-link {{ active_path('sub-categories') }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>List</p>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{{ route('sub-categories.create') }}" class="nav-link {{ active_path('sub-categories/create') }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Create</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+<!--               <li class="nav-item {{ open_segment(2, 'banks') }}">
                 <a href="#" class="nav-link {{ active_segment(2, 'banks') }}">
                   <i class="nav-icon fas fa-landmark"></i>
                   <p>
@@ -84,22 +107,22 @@
                       <i class="far fa-circle nav-icon"></i>
                       <p>List</p>
                     </a>
+                  </li>
 
-                    <li class="nav-item">
-                      <a href="{{ route('banks.create') }}" class="nav-link {{ active_path('banks/create') }}">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Create</p>
-                      </a>
-                    </li>
+                  <li class="nav-item">
+                    <a href="{{ route('banks.create') }}" class="nav-link {{ active_path('banks/create') }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Create</p>
+                    </a>
                   </li>
                 </ul>
-              </li>
+              </li> -->
 
               <li class="nav-item {{ open_segment(2, 'wallets') }}">
                 <a href="#" class="nav-link {{ active_segment(2, 'wallets') }}">
                   <i class="nav-icon fas fa-wallet"></i>
                   <p>
-                    Wallet Management
+                    Wallet
                     <i class="right fas fa-angle-left"></i>
                   </p>
                 </a>
@@ -109,6 +132,7 @@
                       <i class="far fa-circle nav-icon"></i>
                       <p>List</p>
                     </a>
+                  </li>
 
                     <li class="nav-item">
                       <a href="{{ route('wallets.create') }}" class="nav-link {{ active_path('wallets/create') }}">
@@ -116,7 +140,6 @@
                         <p>Create</p>
                       </a>
                     </li>
-                  </li>
                 </ul>
               </li>
 
@@ -134,18 +157,18 @@
                       <i class="far fa-circle nav-icon"></i>
                       <p>List</p>
                     </a>
+                  </li>
 
-                    <li class="nav-item">
-                      <a href="{{ route('transactions.create') }}" class="nav-link {{ active_path('transactions/create') }}">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Create</p>
-                      </a>
-                    </li>
+                  <li class="nav-item">
+                    <a href="{{ route('transactions.create') }}" class="nav-link {{ active_path('transactions/create') }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Create</p>
+                    </a>
                   </li>
                 </ul>
               </li>
 
-              <li class="nav-item {{ open_segment(2, 'exchange-transactions') }} {{ open_segment(2, 'exchange-transactions/create') }}">
+              <!-- <li class="nav-item {{ open_segment(2, 'exchange-transactions') }} {{ open_segment(2, 'exchange-transactions/create') }}">
                 <a href="#" class="nav-link {{ active_segment(2, 'exchange-transactions') }} {{ active_segment(2, 'exchange-transactions/create') }}">
                   <i class="nav-icon fas fa-exchange-alt"></i>
                   <p>
@@ -159,6 +182,7 @@
                       <i class="far fa-circle nav-icon"></i>
                       <p>List</p>
                     </a>
+                  </li>
 
                     <li class="nav-item">
                       <a href="{{ route('exchange-transactions.create') }}" class="nav-link {{ active_path('transactions/create') }}">
@@ -166,9 +190,8 @@
                         <p>Create</p>
                       </a>
                     </li>
-                  </li>
                 </ul>
-              </li>
+              </li> -->
 
             </ul>
         </nav>

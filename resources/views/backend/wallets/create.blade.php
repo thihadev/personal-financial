@@ -4,9 +4,9 @@
 
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="font-semibold text-xl text-gray-800 leading-tight">
+            <!-- <h1 class="font-semibold text-xl text-gray-800 leading-tight">
                Wallet Management
-            </h1>
+            </h1> -->
         </div>
 
         <div class="col-sm-6">
@@ -35,6 +35,21 @@
                 <div class="card-body">
 
                     <div class="form-group">
+                        <label for="wallet_name">Wallet Name <span class="text-red">*</span></label>
+                        <x-input type="text" name="wallet_name" value="" autocomplete="off"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="initial_amount">Initial Amount <span class="text-red">*</span></label>
+                        <x-input type="number" name="initial_amount" value="" autocomplete="off"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="note">Note</label>
+                        <x-input type="text" name="note" value="" autocomplete="off"/>
+                    </div>
+
+                    <!-- <div class="form-group">
                         <label>Wallet User <span class="text-red">*</span></label>
                         <select name="user_id" class="form-control select2" id="user_id" style="width: 100%;">
                             <option value="">Select User</option>
@@ -42,7 +57,8 @@
                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> -->
+
                 </div>
 
                 <!-- /.card-body -->

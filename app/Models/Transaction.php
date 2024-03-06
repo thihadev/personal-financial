@@ -15,11 +15,13 @@ class Transaction extends Model
         "transfer_wallet_id",
         "user_id",
         "category_id",
+        "sub_category_id",
         "type",
         "amount",
         "date",
         "last_balance",
         "description",
+        "fees"
     ];
 
 
@@ -34,24 +36,15 @@ class Transaction extends Model
 
         static::created(function($transaction)
         {
-            if ($transaction->type == TransactionType::PAY) {
+            if ($transaction->type == TransactionType::EXPENSE) {
                 $wallet = Wallet::find($transaction->wallet_id);
                 $wallet->balance -= ($transaction->amount + $transaction->fees);
                 $wallet->update();
-            } elseif ($transaction->type == TransactionType::RECEIVED) {
+            } elseif ($transaction->type == TransactionType::INCOME) {
                 $wallet = Wallet::find($transaction->wallet_id);
                 $wallet->balance += ($transaction->amount + $transaction->fees);
                 $wallet->update();
-            } elseif ($transaction->type == TransactionType::EXCHANGE){
-                $wallet = Wallet::find($transaction->wallet_id);
-                $wallet->balance -= ($transaction->amount + $transaction->fees);
-                $wallet->update();
-
-                $transfer_wallet = Wallet::find($transaction->transfer_wallet_id);
-                $transfer_wallet->balance += ($transaction->amount);
-                $transfer_wallet->update();
-            }
-            
+            } 
         });       
     }
 
@@ -81,9 +74,8 @@ class Transaction extends Model
     public function color() 
     {
         $type = match ($this->type) {
-            TransactionType::PAY => 'danger',
-            TransactionType::RECEIVED => 'success',
-            TransactionType::EXCHANGE => 'warning',
+            TransactionType::EXPENSE => 'danger',
+            TransactionType::INCOME => 'success',
             default     => 'info'    
         };
 

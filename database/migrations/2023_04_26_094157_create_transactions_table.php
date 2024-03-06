@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedInteger('transfer_wallet_id')->index()->nullable();
             $table->unsignedInteger('user_id')->index()->nullable();
             $table->unsignedInteger('category_id')->index()->nullable();
+            $table->unsignedInteger('sub_category_id')->index()->nullable();
             $table->unsignedInteger('type')->index()->nullable();
             $table->bigInteger('amount')->index();
             $table->integer('fees')->index()->default(0);
