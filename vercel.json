@@ -10,6 +10,7 @@
         }
     ],
     "env": {
+        "LD_LIBRARY_PATH": "/libs",
         "APP_NAME": "Laravel Vercel",
         "APP_ENV": "production",
         "APP_DEBUG": "false",
