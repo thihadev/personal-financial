@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\BankController;
 use App\Http\Controllers\Backend\WalletController;
 use App\Http\Controllers\Backend\TransactionController;
+use App\Http\Controllers\Backend\TransferController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,8 +50,14 @@ Route::prefix(config('app.admin_prefix'))->group(function ()
 
         Route::resource('transactions', TransactionController::class);
 
+        Route::resource('borrows', TransferController::class);
+
         Route::get('exchange-transactions/create', [TransactionController::class, 'exchangeCreate'])->name('exchange-transactions.create');
         Route::get('exchange-transactions', [TransactionController::class, 'exchangeIndex'])->name('exchange-transactions.index');
+
+        Route::get('paybacks/create', [TransferController::class, 'payback'])->name('paybacks.create');
+
+
 
     });
 });

@@ -1,18 +1,18 @@
-<x-app-layout title="Expense">
+<x-app-layout title="Debits">
  
     <x-slot name="header">
 
     <div class="row mb-2">
         <div class="col-sm-6">
             <h1 class="font-semibold text-xl text-gray-800 leading-tight">
-               Expense 
+               Debits 
             </h1>
         </div>
 
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item active">Expense List</li>
+                <li class="breadcrumb-item active">Debits List</li>
             </ol>
         </div>
     </div>
@@ -24,7 +24,7 @@
             <!-- Default box -->
             <div class="card">
                 <div class="card-header">
-                    <form action="{{ route('transactions.index') }}" method="GET">
+                    <form action="{{ route('borrows.index') }}" method="GET">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="input-group">
@@ -42,7 +42,7 @@
                                     <select name="wallet_id" class="form-control js-company-ajax select2" id="wallet_id" style="width: 100%;">
                                         <option value="">Select Payment</option>
                                         @foreach($wallets as $wallet)
-                                        <option value="{{$wallet->id}}" {{ request('wallet_id') == $wallet->id ? 'selected' : ''}}>{{$wallet->wallet_name}}</option>
+                                        <option value="{{$wallet->id}}">{{$wallet->wallet_name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -67,20 +67,21 @@
 
                 <div class="card-body">
                     
-                    <h5>Total : <span class="{{$span}}">{{ $total }}</span></h5>
+                    <h5>Borrow : <span class="text-grey">{{ $total_borrow }}</span></h5>
+                    <h5>Lend : <span class="text-grey">{{ abs($total_lend) }}</span></h5>
+                    <h5>Residual Amount : <span class="{{$span}}">{{ abs($residual_amount) }}</span></h5>
                     <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th></th>
+                            <th style="width: 0.2px !important"></th>
                             <th style="width: 10px">#</th>
-                            <th>Category Name</th>
+                            <th>From/To</th>
                             <th>Account</th>
-                            <!-- <th>Type</th> -->
                             <th>Amount</th>
                             <th>Fee</th>
                             <th>Remark</th>
                             <th>Date</th>
-                            <!-- <th class="text-right py-0 align-middle">Action</th> -->
+                            <th class="text-right py-0 align-middle">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,21 +89,21 @@
                         <tr>
                             <td class="bg-{{$transaction->type->color()}}" style="width: 0.2px !important"></td>
                             <td> {{ $key + 1 }}</td>
-                            <td> {{ $transaction->category?->name }}</td>
+                            <td> {{ $transaction->user }}</td>
                             <td> {{ $transaction->wallet?->wallet_name }}</td>
-                            <!-- <td><span class="badge badge-{{$transaction->color()}}">{{ $transaction->type->name }}</span></td> -->
                             <td class="text-right text-bold">{{ number_format($transaction->amount) }}</td>
                             <td class="text-right text-bold">{{ $transaction->fees }}</td>
                             <td>{{ $transaction->description }}</td>
                             <td> {{ $transaction->date->format('d-m-Y') }}</td>
-                           <!--  <td class="text-right py-0 align-middle">
-                                <a href="{{ route('transactions.edit', $transaction) }}" class="btn btn-primary">
-                                  <i class="fas fa-edit"></i>
+                            <td class="text-right py-0 align-middle">
+                                <a href="{{ route('borrows.show', $transaction) }}" class="btn btn-primary">
+                                  <i class="fas fa-eye"></i>
                                 </a>
-                                <a href="#deleteModal" data-toggle="modal" data-id="{{ $transaction->id }}" class="btn btn-danger">
+{{--                                 <a href="#deleteModal" data-toggle="modal" data-id="{{ $transaction->id }}" class="btn btn-danger">
                                   <i class="fas fa-trash"></i>
-                                </a>
-                            </td> -->
+                                </a> --}}
+                            </td>
+
                         </tr>
                         @endforeach
                     </tbody>
@@ -139,7 +140,6 @@
         @if(!request('date'))
             $('#date').val(null)
         @endif
-
 
         // Delete modal script.
         $("#deleteModal").on("show.bs.modal", function(e) {

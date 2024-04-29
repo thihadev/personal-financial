@@ -20,7 +20,7 @@ class TransactionController extends Controller
      */
     public function index(TransactionFilter $filter)
     {
-        $transactions = Transaction::orderBy('date','desc')->filter($filter)->paginate(20);
+        $transactions = Transaction::orderBy('date','desc')->whereIn('type',[TransactionType::INCOME, TransactionType::EXPENSE])->filter($filter)->paginate(20);
 
         $wallets = Wallet::get();
         $total = $transactions->sum('amount');

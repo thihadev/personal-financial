@@ -14,6 +14,7 @@ class Transaction extends Model
         "wallet_id",
         "transfer_wallet_id",
         "user_id",
+        "user",
         "category_id",
         "sub_category_id",
         "type",
@@ -36,11 +37,11 @@ class Transaction extends Model
 
         static::created(function($transaction)
         {
-            if ($transaction->type == TransactionType::EXPENSE) {
+            if (($transaction->type == TransactionType::EXPENSE) || ($transaction->type == TransactionType::LEND)) {
                 $wallet = Wallet::find($transaction->wallet_id);
                 $wallet->balance -= ($transaction->amount + $transaction->fees);
                 $wallet->update();
-            } elseif ($transaction->type == TransactionType::INCOME) {
+            } elseif (($transaction->type == TransactionType::INCOME) || ($transaction->type == TransactionType::BORROW)) {
                 $wallet = Wallet::find($transaction->wallet_id);
                 $wallet->balance += ($transaction->amount + $transaction->fees);
                 $wallet->update();
@@ -76,6 +77,9 @@ class Transaction extends Model
         $type = match ($this->type) {
             TransactionType::EXPENSE => 'danger',
             TransactionType::INCOME => 'success',
+            TransactionType::LEND => 'success',
+            TransactionType::BORROW => 'danger',
+            TransactionType::CREDIT => 'primary',
             default     => 'info'    
         };
 

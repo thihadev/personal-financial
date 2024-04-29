@@ -168,6 +168,31 @@
                 </ul>
               </li>
 
+              <li class="nav-item {{ open_segment(2, 'borrows') }}">
+                <a href="#" class="nav-link {{ active_segment(2, 'borrows') }}">
+                  <i class="nav-icon fas fa-wallet"></i>
+                  <p>
+                    Borrow/Lend
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('borrows.index') }}" class="nav-link {{ active_path('borrows') }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>List</p>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="{{ route('borrows.create') }}" class="nav-link {{ active_path('borrows/create') }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Create</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
               <!-- <li class="nav-item {{ open_segment(2, 'exchange-transactions') }} {{ open_segment(2, 'exchange-transactions/create') }}">
                 <a href="#" class="nav-link {{ active_segment(2, 'exchange-transactions') }} {{ active_segment(2, 'exchange-transactions/create') }}">
                   <i class="nav-icon fas fa-exchange-alt"></i>

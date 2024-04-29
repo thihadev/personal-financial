@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('wallet_id')->index();
             $table->unsignedInteger('transfer_wallet_id')->index()->nullable();
             $table->unsignedInteger('user_id')->index()->nullable();
+            $table->string('user')->index()->nullable();
             $table->unsignedInteger('category_id')->index()->nullable();
             $table->unsignedInteger('sub_category_id')->index()->nullable();
             $table->unsignedInteger('type')->index()->nullable();
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->date('date')->index();
             $table->bigInteger('last_balance')->index();
             $table->longText('description')->nullable();
+            $table->boolean('status')->index()->default(1);
             $table->timestamps();
         });
     }
