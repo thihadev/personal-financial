@@ -81,6 +81,7 @@
                             <th>Fee</th>
                             <th>Remark</th>
                             <th>Date</th>
+                            <th>Status</th>
                             <th class="text-right py-0 align-middle">Action</th>
                         </tr>
                     </thead>
@@ -95,6 +96,7 @@
                             <td class="text-right text-bold">{{ $transaction->fees }}</td>
                             <td>{{ $transaction->description }}</td>
                             <td> {{ $transaction->date->format('d-m-Y') }}</td>
+                            <td> {{ $transaction->status == 1 ? 'PAID' : '-' }}</td>
                             <td class="text-right py-0 align-middle">
                                 <a href="{{ route('borrows.show', $transaction) }}" class="btn btn-primary">
                                   <i class="fas fa-eye"></i>

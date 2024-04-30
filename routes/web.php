@@ -55,7 +55,7 @@ Route::prefix(config('app.admin_prefix'))->group(function ()
         Route::get('exchange-transactions/create', [TransactionController::class, 'exchangeCreate'])->name('exchange-transactions.create');
         Route::get('exchange-transactions', [TransactionController::class, 'exchangeIndex'])->name('exchange-transactions.index');
 
-        Route::get('paybacks/create', [TransferController::class, 'payback'])->name('paybacks.create');
+        Route::post('paybacks/create', [TransferController::class, 'payback'])->name('paybacks.create');
 
 
 

@@ -22,7 +22,8 @@ class Transaction extends Model
         "date",
         "last_balance",
         "description",
-        "fees"
+        "fees",
+        'status'
     ];
 
 
@@ -70,6 +71,11 @@ class Transaction extends Model
     public function transferWallet()
     {
         return $this->belongsTo(Wallet::class,'transfer_wallet_id','id');
+    }
+
+    public function history()
+    {
+        return $this->hasMany(TransactionHistory::class,'transaction_id','id');
     }
 
     public function color() 

@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
+use App\Models\TransactionHistory;
 use App\Models\Category;
 use App\Models\Wallet;
 use App\Http\Requests\BorrowRequest;
+use App\Http\Requests\PaybackRequest;
 use Illuminate\Http\Request;
 use App\Enums\TransactionType;
 
@@ -21,8 +23,8 @@ class TransferController extends Controller
     {
         $transactions = Transaction::whereIn('type', [TransactionType::BORROW, TransactionType::LEND])->paginate();
         $wallets = Wallet::get();
-        $total_borrow = $transactions->where('type', TransactionType::BORROW)->sum('amount');
-        $total_lend = $transactions->where('type', TransactionType::LEND)->sum('amount');
+        $total_borrow = $transactions->where('status', 0)->where('type', TransactionType::BORROW)->sum('amount');
+        $total_lend = $transactions->where('status', 0)->where('type', TransactionType::LEND)->sum('amount');
         $residual_amount = ($total_borrow + $total_lend);
 
         $span = $residual_amount < 0 ? 'text-green' : 'text-red'; 
@@ -70,8 +72,9 @@ class TransferController extends Controller
     public function show(Transaction $borrow)
     {
         $title = ($borrow->type == TransactionType::BORROW) ? "BORROW: You ➜ {$borrow->user}" : "LEND: {$borrow->user} ➜ You";
+        $wallets = Wallet::get();
 
-        return view('backend.borrows.show', compact('borrow', 'title'));
+        return view('backend.borrows.show', compact('borrow', 'title','wallets'));
     }
 
     /**
@@ -110,6 +113,24 @@ class TransferController extends Controller
 
     public function payback(PaybackRequest $request)
     {
-        // code...
+        $data = $request->validated();
+
+        if ($request->type == 3) {
+            $data['type'] = TransactionType::INCOME->value;
+        }else{
+            $data['type'] = TransactionType::EXPENSE->value;
+        }
+
+        $transaction = Transaction::create($data);
+
+        $history = TransactionHistory::create($data);
+
+        $history_tran = $history->transaction;
+
+        if (abs($history_tran->amount) <= abs($history->sum('amount'))) {
+            $history_tran->update(['status' => 1]);
+        }
+
+        return redirect()->back();
     }
 }

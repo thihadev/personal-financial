@@ -26,6 +26,7 @@ class PaybackRequest extends FormRequest
         return match ($this->method()) {
             'POST' => [
                 'wallet_id' => ['required'],
+                'transaction_id' => ['required'],
                 'type' => ['required'],
                 'amount' => ['required'],
                 'date' => ['required'],
@@ -34,6 +35,7 @@ class PaybackRequest extends FormRequest
             ],
             'PUT', 'PATCH' => [
                 'wallet_id' => ['required'],
+                'transaction_id' => ['required'],
                 'type' => ['required'],
                 'amount' => ['required'],
                 'date' => ['required'],
