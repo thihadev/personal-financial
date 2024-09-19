@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::latest()->paginate(20);
+        $categories = Category::whereNotIn('id',['1'])->latest()->paginate(20);
 
         return view('backend.categories.index',compact('categories'));
     }
@@ -44,7 +44,10 @@ class CategoryController extends Controller
     {
         $data = $request->validated();
 
-        $data['image'] = storage_upload($data['image'], 'categories');
+        // if ($data['image']) {
+        //     $data['image'] = storage_upload($data['image'], 'categories');
+        // }
+
 
         Category::create($data);
 
@@ -70,7 +73,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        $types = TransactionType::cases();
+
+        return view('backend.categories.edit',compact('category','types'));
     }
 
     /**
@@ -80,9 +85,18 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
-        //
+        $data = $request->validated();
+
+        if ($request->image) {
+            Storage::delete(image_path($categorys->image));
+            $data['image'] = storage_upload($data['image'], 'sub-categories');
+        }
+
+        $categorys->update($data);
+
+        return redirect()->route('sub-categories.index')->with('success', 'Successfully Updated.');
     }
 
     /**
@@ -93,7 +107,9 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return redirect()->route('categories.index')->with('Successfully Deleted.');
     }
 
     public function active(Request $request)

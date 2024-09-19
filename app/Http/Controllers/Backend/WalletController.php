@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\WalletRequest;
 use App\Models\Bank;
+use App\Models\Transaction;
 
 class WalletController extends Controller
 {
@@ -81,7 +82,7 @@ class WalletController extends Controller
      */
     public function edit(Wallet $wallet)
     {
-        //
+        return view('backend.wallets.edit', compact('wallet'));
     }
 
     /**
@@ -91,9 +92,18 @@ class WalletController extends Controller
      * @param  \App\Models\Wallet  $wallet
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Wallet $wallet)
+    public function update(WalletRequest $request, Wallet $wallet)
     {
-        //
+        $data = $request->validated();
+
+        $transaction_amount = Transaction::where('wallet_id',$wallet->id)->sum('amount');
+        
+        $wallet->update([
+            'initial_amount' => $data['initial_amount'],
+            'balance' => $data['initial_amount'] - $transaction_amount,
+        ]);
+
+        return redirect()->route('wallets.index')->with('success', 'Successfully Updated.');
     }
 
     /**

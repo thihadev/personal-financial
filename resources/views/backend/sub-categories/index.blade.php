@@ -35,7 +35,7 @@
                     <thead>
                         <tr>
                           <th style="width: 10px">#</th>
-                          <th>Image</th>
+                          {{-- <th>Image</th> --}}
                           <th>Name</th>
                           <th class="text-right py-0 align-middle">Action</th>
                         </tr>
@@ -44,10 +44,10 @@
                         @foreach($sub_categories as $key => $category)
                         <tr>
                             <td class="table-{{ $category->type->color()}}"> {{ $key + 1 }}</td>
-                            <td> <img src="{{ image_path($category->image) }}" alt="{{ $category->name }}"></td>
+                            {{-- <td> <img width="50" src="{{ image_path($category->image) }}" alt="{{ $category->name }}"></td> --}}
                             <td> {{ $category->name }}</td>
                             <td class="text-right py-0 align-middle">
-                                <a href="{{ route('categories.edit', $category) }}" class="btn btn-primary">
+                                <a href="{{ route('sub-categories.edit', $category) }}" class="btn btn-primary">
                                   <i class="fas fa-edit"></i>
                                 </a>
                                 <a href="#deleteModal" data-toggle="modal" data-id="{{ $category->id }}" class="btn btn-danger">

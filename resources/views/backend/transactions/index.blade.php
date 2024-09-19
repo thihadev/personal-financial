@@ -80,7 +80,7 @@
                             <th>Fee</th>
                             <th>Remark</th>
                             <th>Date</th>
-                            <!-- <th class="text-right py-0 align-middle">Action</th> -->
+                            <th class="text-right py-0 align-middle">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -91,18 +91,18 @@
                             <td> {{ $transaction->category?->name }}</td>
                             <td> {{ $transaction->wallet?->wallet_name }}</td>
                             <!-- <td><span class="badge badge-{{$transaction->color()}}">{{ $transaction->type->name }}</span></td> -->
-                            <td class="text-right text-bold">{{ number_format($transaction->amount) }}</td>
+                            <td class="text-right text-bold">{{ number_format($transaction->transaction_amount) }}</td>
                             <td class="text-right text-bold">{{ $transaction->fees }}</td>
                             <td>{{ $transaction->description }}</td>
                             <td> {{ $transaction->date->format('d-m-Y') }}</td>
-                           <!--  <td class="text-right py-0 align-middle">
-                                <a href="{{ route('transactions.edit', $transaction) }}" class="btn btn-primary">
+                            <td class="text-right py-0 align-middle">
+{{--                                 <a href="{{ route('transactions.edit', $transaction) }}" class="btn btn-primary">
                                   <i class="fas fa-edit"></i>
-                                </a>
+                                </a> --}}
                                 <a href="#deleteModal" data-toggle="modal" data-id="{{ $transaction->id }}" class="btn btn-danger">
                                   <i class="fas fa-trash"></i>
                                 </a>
-                            </td> -->
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

@@ -23,7 +23,7 @@ class TransactionController extends Controller
         $transactions = Transaction::orderBy('date','desc')->whereIn('type',[TransactionType::INCOME, TransactionType::EXPENSE])->filter($filter)->paginate(20);
 
         $wallets = Wallet::get();
-        $total = $transactions->sum('amount');
+        $total = $transactions->sum('transaction_amount');
         $span = $total > 0 ? 'text-green' : 'text-red';
 
         return view('backend.transactions.index', compact('transactions','wallets','total', 'span'));
@@ -70,7 +70,6 @@ class TransactionController extends Controller
         $data = $request->validated();
 
         $data['type'] = Category::find($data['category_id'])->type;
-        $data['amount'] = TransactionType::INCOME == $data['type'] ? $data['amount'] : -$data['amount'];
 
         Transaction::create($data);
 
@@ -123,6 +122,12 @@ class TransactionController extends Controller
      */
     public function destroy(Transaction $transaction)
     {
-        //
+
+        $transaction->wallet->balance -= $transaction->transaction_amount;
+        $transaction->wallet->update();
+
+        $transaction->delete();
+
+        return redirect()->route('transactions.index')->with('flash','Successfully deleted.');
     }
 }

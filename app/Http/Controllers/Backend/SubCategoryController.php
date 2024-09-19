@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\SubCategory;
 use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\SubCategoryRequest;
 
 class SubCategoryController extends Controller
@@ -52,11 +53,11 @@ class SubCategoryController extends Controller
     {
         $data = $request->validated();
 
-        $data['image'] = storage_upload($data['image'], 'sub-categories');
+        // $data['image'] = storage_upload($data['image'], 'sub-categories');
 
         SubCategory::create($data);
 
-        return redirect()->route('sub-categories.index')->with('success', 'Successfully credated.');
+        return redirect()->route('sub-categories.index')->with('success', 'Successfully created.');
     }
 
     /**
@@ -78,7 +79,8 @@ class SubCategoryController extends Controller
      */
     public function edit(SubCategory $subCategory)
     {
-        //
+        $categories = Category::get();
+        return view('backend.sub-categories.edit', compact('subCategory','categories'));
     }
 
     /**
@@ -88,9 +90,18 @@ class SubCategoryController extends Controller
      * @param  \App\Models\SubCategory  $subCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SubCategory $subCategory)
+    public function update(SubCategoryRequest $request, SubCategory $subCategory)
     {
-        //
+        $data = $request->validated();
+
+        if ($request->image) {
+            Storage::delete(image_path($subCategory->image));
+            $data['image'] = storage_upload($data['image'], 'sub-categories');
+        }
+        
+        $subCategory->update($data);
+
+        return redirect()->route('sub-categories.index')->with('success', 'Successfully Updated.');
     }
 
     /**
@@ -101,7 +112,9 @@ class SubCategoryController extends Controller
      */
     public function destroy(SubCategory $subCategory)
     {
-        //
+        $subCategory->delete();
+
+        return redirect()->route('sub-categories.index')->with('flash', 'Successfully deleted.');
     }    
 
     public function getCategory(Request $request)

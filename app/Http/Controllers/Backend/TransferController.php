@@ -11,6 +11,7 @@ use App\Http\Requests\BorrowRequest;
 use App\Http\Requests\PaybackRequest;
 use Illuminate\Http\Request;
 use App\Enums\TransactionType;
+use Illuminate\Support\Facades\DB;
 
 class TransferController extends Controller
 {
@@ -23,13 +24,16 @@ class TransferController extends Controller
     {
         $transactions = Transaction::whereIn('type', [TransactionType::BORROW, TransactionType::LEND])->paginate();
         $wallets = Wallet::get();
-        $total_borrow = $transactions->where('status', 0)->where('type', TransactionType::BORROW)->sum('amount');
-        $total_lend = $transactions->where('status', 0)->where('type', TransactionType::LEND)->sum('amount');
-        $residual_amount = ($total_borrow + $total_lend);
+        $lend = Transaction::where('status', 0)->where('type', TransactionType::LEND)
+        ->selectRaw('SUM(amount - payback_amount) as total_payback, SUM(amount) as total_lend')->first();
+
+        $total_borrow = Transaction::where('status', 0)->where('type', TransactionType::BORROW)->sum(DB::raw('amount - payback_amount'));
+
+        $residual_amount = ($total_borrow - $lend->total_payback);
 
         $span = $residual_amount < 0 ? 'text-green' : 'text-red'; 
 
-        return view('backend.borrows.index', compact('transactions','wallets','total_borrow','total_lend','span','residual_amount'));
+        return view('backend.borrows.index', compact('transactions','wallets','total_borrow','lend','span','residual_amount'));
     }
 
     /**
@@ -55,8 +59,8 @@ class TransferController extends Controller
     {
         $data = $request->validated();
 
-        $data['amount'] = TransactionType::BORROW->value == $data['type'] ? $data['amount'] : -$data['amount'];
         $data['user'] = isset($data['from_user']) ? $data['from_user'] : $data['to_user'];
+        $data['status'] = 0;
 
         Transaction::create($data);
 
@@ -117,18 +121,24 @@ class TransferController extends Controller
 
         if ($request->type == 3) {
             $data['type'] = TransactionType::INCOME->value;
+            $data['amount'] = $data['amount'];
         }else{
             $data['type'] = TransactionType::EXPENSE->value;
+            $data['amount'] = -$data['amount'];
         }
-
+        
+        $data['category_id'] = 1;
         $transaction = Transaction::create($data);
 
         $history = TransactionHistory::create($data);
 
         $history_tran = $history->transaction;
+        $history_tran->payback_amount += $data['amount'];
 
         if (abs($history_tran->amount) <= abs($history->sum('amount'))) {
-            $history_tran->update(['status' => 1]);
+            $history_tran->update([
+                'status' => 1
+            ]);
         }
 
         return redirect()->back();

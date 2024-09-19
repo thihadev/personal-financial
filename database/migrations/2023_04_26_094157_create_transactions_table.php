@@ -23,12 +23,15 @@ return new class extends Migration
             $table->unsignedInteger('sub_category_id')->index()->nullable();
             $table->unsignedInteger('type')->index()->nullable();
             $table->bigInteger('amount')->index();
+            $table->bigInteger('transaction_amount')->index();
+            $table->bigInteger('payback_amount')->nullable()->default(0)->index();
             $table->integer('fees')->index()->default(0);
             $table->date('date')->index();
             $table->bigInteger('last_balance')->index();
             $table->longText('description')->nullable();
             $table->boolean('status')->index()->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

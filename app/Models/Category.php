@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\TransactionType;
+use Illuminate\Support\Facades\Storage;
 
 class Category extends Model
 {
@@ -16,4 +17,16 @@ class Category extends Model
         'type' => TransactionType::class
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($category)
+        {
+            $image = image_path($category->image);
+            if ($image) {
+                Storage::delete($image);
+            }
+        });       
+    }
 }

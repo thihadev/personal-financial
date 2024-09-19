@@ -25,7 +25,7 @@ class CategoryRequest extends FormRequest
     {
         return match ($this->method()) {
             'POST' => [
-                'image' => 'required',
+                'image' => 'nullable',
                 'name' => 'required',
                 'type' => 'required',
             ],

@@ -34,8 +34,8 @@
 
                 <div class="card-body">
 
-                   {{--  <div class="form-group {{ $errors->has('logo') ? 'has-error' : '' }}">
-                        <img for="logo" src="{{url('/img/no-image.png')}}" class="img-responsive uploadImage" style="width: 200px; height: 200px;"><br/><br>
+                    {{-- <div class="form-group {{ $errors->has('logo') ? 'has-error' : '' }}">
+                        <img for="logo" src="{{ image_path($category->image) }}" class="img-responsive uploadImage" style="width: 200px; height: 200px;"><br/><br>
                             <input type="file" id="image" name="image" class="uploadImageFile" required>
                         @if ($errors->has('image'))
                             <span class="help-block">
@@ -46,16 +46,16 @@
 
                     <div class="form-group">
                         <label for="name">Category Name</label>
-                        <x-input type="text" name="name" value="" autocomplete="off"/>
+                        <x-input type="text" name="name" value="{{ $category->name }}" autocomplete="off"/>
                     </div>
 
 
 	                <div class="form-group">
 	                    <label>Transactioin Type <span class="text-red">*</span></label>
-	                    <select name="type" class="form-control select2" id="type" style="width: 100%;">
+	                    <select name="type" class="form-control" id="type" style="width: 100%;">
 	                        <option value="">Select Type</option>
 	                        @foreach($types as $type)
-	                        <option value="{{ $type->value }}">{{ $type->name }}</option>
+	                        <option value="{{ $type->value }}" {{ ($category->type == $type->value) ? 'selected' : '' }}>{{ $type->name }}</option>
 	                        @endforeach
 	                    </select>
 	                </div>
@@ -64,7 +64,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
               </form>
             </div>

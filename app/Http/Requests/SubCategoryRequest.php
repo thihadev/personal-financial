@@ -25,13 +25,13 @@ class SubCategoryRequest extends FormRequest
     {
         return match ($this->method()) {
             'POST' => [
-                'image' => ['required'],
+                'image' => ['nullable'],
                 'category_id' => ['required'],
                 'name' => ['required'],
                 'type' => ['required'],
             ],
             'PUT', 'PATCH' => [
-                'image' => ['required'],
+                'image' => ['nullable'],
                 'category_id' => ['required'],
                 'name' => ['required'],
                 'type' => ['required'],

@@ -12,8 +12,8 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('users.index') }}">Sub-Category List</a></li>
-                <li class="breadcrumb-item active">Sub-Category Create</li>
+                <li class="breadcrumb-item"><a href="{{ route('sub-categories.index') }}">Sub-Category List</a></li>
+                <li class="breadcrumb-item active">Sub-Category Edit</li>
             </ol>
         </div>
     </div>
@@ -24,19 +24,20 @@
         <div class="col-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Create New Sub-Category</h3>
+                    <h3 class="card-title">Edit Sub-Category</h3>
                 </div>
               <!-- /.card-header -->
 
                 <!-- form start -->
-                <form action="{{ route('sub-categories.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('sub-categories.update', $subCategory) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method("PATCH")
 
                 <div class="card-body">
 
                     {{-- <div class="form-group {{ $errors->has('logo') ? 'has-error' : '' }}">
-                        <img for="logo" src="{{url('/img/no-image.png')}}" class="img-responsive uploadImage" style="width: 200px; height: 200px;"><br/><br>
-                            <input type="file" id="image" name="image" class="uploadImageFile" required>
+                        <img for="logo" src="{{image_path($subCategory->image)}}" class="img-responsive uploadImage" style="width: 200px; height: 200px;" ><br/><br>
+                            <input type="file" id="image"  name="image" class="uploadImageFile">
                         @if ($errors->has('image'))
                             <span class="help-block">
                               <strong>{{ $errors->first('image') }} </strong>
@@ -49,7 +50,7 @@
 	                    <select name="category_id" class="form-control select2 category_id" id="category_id" style="width: 100%;">
                             <option>Select Category</option>
                             @foreach($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }} ({{$category->type->name}})</option>
+                            <option value="{{ $category->id }}" {{ $subCategory->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }} ({{$category->type->name}})</option>
                             @endforeach
 	                        
 	                    </select>
@@ -57,10 +58,10 @@
 
                     <div class="form-group">
                         <label for="name">Sub-Category Name <span class="text-red">*</span></label>
-                        <x-input type="text" name="name" value="" autocomplete="off"/>
+                        <x-input type="text" name="name" value="{{ $subCategory->name }}" autocomplete="off"/>
                     </div>
 
-                    <x-input readonly type="hidden" name="type" id="type" value="" autocomplete="off"/>
+                    <x-input readonly type="hidden" name="type" id="type" value="{{ $subCategory->type }}" autocomplete="off"/>
 
                 </div>
 
@@ -82,6 +83,12 @@
 <script>
 $(document).on("change", ".category_id", function () {
     var category_id = $('#category_id').val();
+    getCategory(category_id);
+
+});
+
+function getCategory(category_id) 
+{
     var url = '{{ route("ajax.get-category") }}';
 
     $.ajax({
@@ -96,7 +103,7 @@ $(document).on("change", ".category_id", function () {
             $('#type').val(response);
         }
     })
-});
+}
 
 $(function(){
     function readURL(input) {

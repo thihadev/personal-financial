@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\TransactionType;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Transaction extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         "wallet_id",
@@ -19,6 +20,7 @@ class Transaction extends Model
         "sub_category_id",
         "type",
         "amount",
+        "transaction_amount",
         "date",
         "last_balance",
         "description",
@@ -42,10 +44,14 @@ class Transaction extends Model
                 $wallet = Wallet::find($transaction->wallet_id);
                 $wallet->balance -= ($transaction->amount + $transaction->fees);
                 $wallet->update();
+
+                $transaction->update(['transaction_amount' => -$transaction->amount]);
             } elseif (($transaction->type == TransactionType::INCOME) || ($transaction->type == TransactionType::BORROW)) {
                 $wallet = Wallet::find($transaction->wallet_id);
                 $wallet->balance += ($transaction->amount + $transaction->fees);
                 $wallet->update();
+
+                $transaction->update(['transaction_amount' => $transaction->amount]);
             } 
         });       
     }

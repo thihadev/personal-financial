@@ -68,9 +68,9 @@
                 <div class="card-body">
                     
                     <h5>Borrow : <span class="text-grey">{{ $total_borrow }}</span></h5>
-                    <h5>Lend : <span class="text-grey">{{ abs($total_lend) }}</span></h5>
+                    <h5>Lend : <span class="text-grey">{{ ($lend->total_lend ?? 0) }}</span></h5>
                     <h5>Residual Amount : <span class="{{$span}}">{{ abs($residual_amount) }}</span></h5>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered projects">
                     <thead>
                         <tr>
                             <th style="width: 0.2px !important"></th>
@@ -78,34 +78,53 @@
                             <th>From/To</th>
                             <th>Account</th>
                             <th>Amount</th>
-                            <th>Fee</th>
-                            <th>Remark</th>
-                            <th>Date</th>
+                            <th>Payback</th>
+                            <th>Progress</th>
                             <th>Status</th>
                             <th class="text-right py-0 align-middle">Action</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         @foreach($transactions as $key => $transaction)
+                            @php
+                                $payback = $transaction->history->sum('amount');
+                            @endphp
                         <tr>
                             <td class="bg-{{$transaction->type->color()}}" style="width: 0.2px !important"></td>
-                            <td> {{ $key + 1 }}</td>
-                            <td> {{ $transaction->user }}</td>
+                            <td> 
+                                {{ $key + 1 }}
+                            </td>
+                            <td> 
+                                <b>{{ $transaction->user }}</b>
+                                <br>
+                                <p>{{$transaction->created_at->format('d-m-Y h:i A')}}</p>
+                            </td>
                             <td> {{ $transaction->wallet?->wallet_name }}</td>
-                            <td class="text-right text-bold">{{ number_format($transaction->amount) }}</td>
-                            <td class="text-right text-bold">{{ $transaction->fees }}</td>
-                            <td>{{ $transaction->description }}</td>
-                            <td> {{ $transaction->date->format('d-m-Y') }}</td>
-                            <td> {{ $transaction->status == 1 ? 'PAID' : '-' }}</td>
+                            <td class="text-bold">{{ number_format($transaction->transaction_amount) }}</td>
+                            <td class="text-bold">{{ $payback }}</td>
+                            <td class="project_progress">
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="" aria-valuemin="{{$payback}}" aria-valuemax="{{$transaction->amount }}" style="width: {{($payback) / 100}}%">
+                                    </div>
+                                </div>
+                                <small>
+                                    {{($payback) / 100}} %
+                                </small>
+                            </td>
+                            <td>
+                                @if($transaction->status == 1)
+                                <label class="badge badge-success">PAID</label>
+                                @else
+                                -
+                                @endif
+                                
+                            </td>
                             <td class="text-right py-0 align-middle">
                                 <a href="{{ route('borrows.show', $transaction) }}" class="btn btn-primary">
                                   <i class="fas fa-eye"></i>
                                 </a>
-{{--                                 <a href="#deleteModal" data-toggle="modal" data-id="{{ $transaction->id }}" class="btn btn-danger">
-                                  <i class="fas fa-trash"></i>
-                                </a> --}}
                             </td>
-
                         </tr>
                         @endforeach
                     </tbody>

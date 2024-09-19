@@ -35,7 +35,7 @@
                     <thead>
                         <tr>
                           <th style="width: 10px">#</th>
-                          <th>Image</th>
+                          {{-- <th>Image</th> --}}
                           <th>Name</th>
                           <th>Sub-Category</th>
                           <th class="text-right py-0 align-middle">Action</th>
@@ -45,7 +45,7 @@
                         @foreach($categories as $key => $category)
                         <tr>
                             <td class="table-{{ $category->type->color()}}"> {{ $key + 1 }}</td>
-                            <td> <img src="{{ image_path($category->image) }}" alt="{{ $category->name }}"></td>
+                            {{-- <td><img src="{{ image_path($category->image) }}" alt="{{ $category->name }}" width="50"></td> --}}
                             <td> {{ $category->name }}</td>
                             <td><a href="{{ route('sub-categories.index',['category_id'=>$category->id]) }}">{{ $category->name}}'s Sub-Category</a></td>
                             <td class="text-right py-0 align-middle">
