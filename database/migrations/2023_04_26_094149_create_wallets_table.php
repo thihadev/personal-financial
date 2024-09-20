@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('user_id')->nullable()->index();
             // $table->unsignedInteger('bank_id')->nullable()->index();
-            $table->sting('wallet_name')->index();
+            $table->string('wallet_name')->index();
             $table->bigInteger('initial_amount')->index();
             $table->bigInteger('balance')->default(0)->index();
             $table->text('note')->nullable();
